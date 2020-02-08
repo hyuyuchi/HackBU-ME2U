@@ -4,6 +4,8 @@ import random
 import time
 from src import Button
 from src import Line
+#from src import Chia
+from src import Sian
 
 class Controller:
 
@@ -32,6 +34,10 @@ class Controller:
         #game screen
         self.ground = Button.Button(0, 55, 900, 1700, "assets/GameScreen_Ground.PNG")
 
+#______________________________________________________________________________LOAD SPRITES
+
+        #self.chia = Chia.Chia(1800, 200)
+        self.sian = Sian.Sian(300, 300, "assets/Sian_Empty.PNG")
 
         self.show = pygame.sprite.Group()
 
@@ -185,7 +191,8 @@ class Controller:
                       sys.exit()
 
 
-
+               self.sian.empty
+               self.sian.hold
             
                self.show = pygame.sprite.Group((self.ground,))
                self.reset("assets/GameScreen.PNG")
