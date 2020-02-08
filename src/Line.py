@@ -15,11 +15,12 @@ class Line(pygame.sprite.Sprite):
     def update(self, num, numx):
         try:
             if self.rect.x < 1700 and num >= 0:
-            
                 self.rect.x += 30 
                 self.rect.y = (((-1/num) * (self.rect.x-numx) ** 2) - 350) * -1
                 '''-1/num*(X-numx)**2 -350'''
-                #print(str(self.rect.x) + " , " + str(self.rect.y))
+                '''#print(str(self.rect.x) + " , " + str(self.rect.y))'''
+        except:
+            pass
 
     def reset(self):
         self.rect.x = self.x
