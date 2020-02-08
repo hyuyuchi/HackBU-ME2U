@@ -3,14 +3,15 @@ import random
 class Chia(pygame.sprite.Sprite):
      def __init__(self, x, y, h, w, image, direction):
          pygame.sprite.Sprite.__init__(self)
-    
+
+         self.image = pygame.transform.scale(pygame.image.load(image).convert_alpha()),(h,w))
+         self.rect = image.rect.get_rect()
          self.rect.x = x
          self.rect.y = y
          self.height = h
-         self.weight = w
+         self.width = w
          self.direction = "left"
-         self.speed = 3
-         self.image = pygame.transform.scale(pygame.image.load(image).convert_alpha()),(h,w))
+
 
 
          #walking animation
