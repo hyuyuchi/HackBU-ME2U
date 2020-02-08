@@ -16,7 +16,7 @@ class Controller:
 
 
         #start buttons
-        self.startPB = Button.Button(571, 490, 137, 517, "assets/StartScreen_PlayButton.png")
+        self.startPB = Button.Button(571, 490, 123, 465, "assets/StartScreen_PlayButton.png")
         
 
 
