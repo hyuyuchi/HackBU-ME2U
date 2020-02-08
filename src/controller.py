@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import time
 from src import Button
 from src import Line
 
@@ -23,13 +24,13 @@ class Controller:
 
 
         #instruction buttons
-        self.insrXB = Button.Button(10, 760, 123, 465, "assets/StartScreen_QuitButton.png")
-        self.insrNB = Button.Button(10, 760, 123, 465, "assets/StartScreen_QuitButton.png")
-        self.insrPB = Button.Button(10, 760, 123, 465, "assets/StartScreen_QuitButton.png")
+        self.insrXB = Button.Button(35, 40, 120, 120, "assets/InstructionScreen_ExitButton.PNG")
+        self.insrNB = Button.Button(1538, 810, 138, 138, "assets/InstructionScreen_RightButton.PNG")
+        self.insrPB = Button.Button(35, 810, 138, 138, "assets/InstructionScreen_LeftButton.PNG")
                  
 
         #game screen
-        self.ground = Button.Button(0, 40, 900, 1700, "assets/GameScreen_Ground.PNG")
+        self.ground = Button.Button(0, 55, 900, 1700, "assets/GameScreen_Ground.PNG")
 
 
 
@@ -98,8 +99,14 @@ class Controller:
                 if event.type == pygame.QUIT:
                     sys.exit()
 
+            if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+                sys.exit()
 
-            self.show = pygame.sprite.Group()
+            if self.insrNB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+                self.state = "INSTRUCTION_2"
+                time.sleep(0.3)
+
+            self.show = pygame.sprite.Group((self.insrXB,) + (self.insrNB,) + (self.insrPB,))
             self.reset("assets/InstructionScreen_PG1.PNG")
 
 
@@ -109,8 +116,18 @@ class Controller:
                 if event.type == pygame.QUIT:
                     sys.exit()
 
+            if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+                sys.exit()
 
-            self.show = pygame.sprite.Group()
+            if self.insrNB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+                self.state = "INSTRUCTION_3"
+                time.sleep(0.3)
+
+            if self.insrPB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+                self.state = "INSTRUCTION_1"
+                time.sleep(0.3)
+
+            self.show = pygame.sprite.Group((self.insrXB,) + (self.insrNB,) + (self.insrPB,))
             self.reset("assets/InstructionScreen_PG2.PNG")
 
 
@@ -121,7 +138,7 @@ class Controller:
                     sys.exit()
 
 
-            self.show = pygame.sprite.Group()
+            self.show = pygame.sprite.Group((self.insrXB,) + (self.insrNB,))
             self.reset("assets/InstructionScreen_PG3.PNG")
 
         while self.state == "INSTRUCTION_4":
@@ -131,7 +148,7 @@ class Controller:
                     sys.exit()
 
 
-            self.show = pygame.sprite.Group()
+            self.show = pygame.sprite.Group((self.insrXB,) + (self.insrNB,))
             self.reset("assets/InstructionScreen_PG4.PNG")
 
         while self.state == "INSTRUCTION_5":
@@ -141,7 +158,7 @@ class Controller:
                     sys.exit()
 
 
-            self.show = pygame.sprite.Group()
+            self.show = pygame.sprite.Group((self.insrXB,) + (self.insrPB,))
             self.reset("assets/InstructionScreen_PG5.PNG")
 
         #===============================================================================================================================================================
@@ -153,8 +170,8 @@ class Controller:
                 if event.type == pygame.QUIT:
                     sys.exit()
 
-            if pygame.mouse.get_pressed()[0] and self.ground.rect.collidepoint(pygame.mouse.get_pos()):
-                self.show = pygame.sprite.Group((self.ground,))
+            '''if pygame.mouse.get_pressed()[0] and self.ground.rect.collidepoint(pygame.mouse.get_pos()):
+                self.show = pygame.sprite.Group((self.ground,))'''
 
 
             
