@@ -119,8 +119,10 @@ class Controller:
                    self.state = "INSTRUCTION_1"
                    time.sleep(0.3)
 
+
                 self.show = pygame.sprite.Group((self.insrXB,) + (self.insrNB,) + (self.insrLeftB,))
                 self.reset("assets/InstructionScreen_PG2.PNG")
+
 
 
             while self.state == "INSTRUCTION_3":
