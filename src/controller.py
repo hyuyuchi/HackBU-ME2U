@@ -4,7 +4,7 @@ import random
 import time
 from src import Button
 from src import Line
-
+from src import Crow
 class Controller:
 
     def __init__(self, width=1700, height=956):
@@ -31,6 +31,14 @@ class Controller:
 
         #game screen
         self.ground = Button.Button(0, 55, 900, 1700, "assets/GameScreen_Ground.PNG")
+        self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
+
+
+
+
+
+
+
 
 
         self.show = pygame.sprite.Group()
@@ -76,7 +84,7 @@ class Controller:
                 self.show = pygame.sprite.Group((self.startPB,) + (self.startHB,) + (self.startQB,))
                 self.reset("assets/StartScreen_FullDisplay.png")
 
-
+            #===========================================================================================================================================================
             while self.state == "INSTRUCTION_1":
                 #exit button
                 for event in pygame.event.get():
@@ -173,20 +181,20 @@ class Controller:
                 self.show = pygame.sprite.Group((self.insrXB,) + (self.insrLeftB,))
                 self.reset("assets/InstructionScreen_PG5.PNG")
 
-            #===============================================================================================================================================================
+            #===========================================================================================================================================================
 
 
             while self.state == "GAME":
                #exit button
-               for event in pygame.event.get():
-                   if event.type == pygame.QUIT:
-                      sys.exit()
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
 
 
-
+                self.crow.update()
             
-               self.show = pygame.sprite.Group((self.ground,))
-               self.reset("assets/GameScreen.PNG")
+                self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
+                self.reset("assets/GameScreen.PNG")
     
 
 
