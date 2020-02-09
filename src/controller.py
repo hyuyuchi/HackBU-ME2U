@@ -45,13 +45,26 @@ class Controller:
         self.score = 0
      
 
+
         self.gift = Gift.Gift(150, 600, 60, 60, "assets/LoveLetter.PNG")
-        self.heart = 3
+
+        self.hearts = pygame.sprite.Group()
+        for i in range(3):
+            x = 170 + 50 * i
+            y = 13
+            self.hearts.add(Button.Button(x, y, 70, 70, "assets/Heart.PNG"))
+        self.deadH = pygame.sprite.Group()
+
+ 
+        self.scorepic10 = Button.Button(200, 93, 40, 40, "assets/0.PNG")
+        self.scorepic1 = Button.Button(250, 93, 40, 40, "assets/0.PNG")       
+        self.scorepic = pygame.sprite.Group((self.scorepic10,) + (self.scorepic1,))    
+        self.numbers = [0]
 
 
         #GameOver buttons
-        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
-        self.endPB = Button.Button(35, 956, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
+        self.endPB = Button.Button(1100, 370, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
+
 
         #Timers
         self.happy_timer = 0
@@ -62,13 +75,19 @@ class Controller:
         self.startwalk = False
 
 
+        self.endRB = Button.Button(1150, 500, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
+        self.scoreH10 = Button.Button(1270, 247, 35, 35, "assets/0.PNG")
+        self.scoreH1 = Button.Button(1305, 247, 35, 35, "assets/0.PNG")       
+        self.scoreH = pygame.sprite.Group((self.scoreH10,) + (self.scoreH1,))
+
+
 #-----------------------------------------------------------------------------------------------------------LOAD SPRITES
 
         
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
-
+        self.score = 0
         self.state = "START"
 
         self.linestate = "n"
@@ -76,9 +95,10 @@ class Controller:
         self.numx = 400
 
     def mainLoop(self):
-        while self.state == "START":
+        if self.state == "START":
             self.startLoop()
-
+        elif self.state == "GAMEOVER":
+            self.gameOver()
 
     def reset(self, image):
         self.theline.reset()
@@ -228,11 +248,18 @@ class Controller:
 
             fall = pygame.sprite.collide_rect(self.ground, self.gift) or self.gift.rect.x > 1710
             if fall:
+                if self.gift.state == "GOOD":
+                    hearts = self.hearts.sprites()
+                    dead = hearts[-1]
+                    self.hearts.remove(dead)
+                    self.deadH.add(dead)
+                    print(len(self.hearts))
                 self.gift.reset()
                 self.gameLoop()
 
             catch = pygame.sprite.collide_rect_ratio(0.5)(self.chia, self.gift)
             if catch:
+
                 if self.gift.state == "GOOD":
                    self.score += 1
                    self.chia.happy(221, 365)
@@ -242,7 +269,18 @@ class Controller:
                 elif self.gift. state == "BAD":
                    self.chia.angry(221, 365)
                    self.angryy = True
-                   #self.hearts -= 1
+
+                   hearts = self.hearts.sprites()
+                   dead = hearts[-1]
+                   self.hearts.remove(dead)
+                   self.deadH.add(dead)
+                   #print(len(self.hearts))
+                else:
+                   self.score += 1
+                   self.scorepic10.change(self.numbers, self.score//10)
+                   self.scorepic1.change(self.numbers, self.score%10)
+                   print(self.score//10, self.score%10)
+
                 self.gift.reset()
                 self.gameLoop()
 
@@ -256,13 +294,15 @@ class Controller:
                self.gameLoop()
 
             self.crow.update()
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
+            self.show.draw(self.screen)
             self.reset("assets/GameScreen.PNG")
 
 
 
     def gameLoop(self):
         pygame.key.set_repeat(1,50)
+
         while True:
            #exit button
             for event in pygame.event.get():
@@ -275,6 +315,7 @@ class Controller:
             good = data1["GoodObjects"]
             bad = data1["BadObjects"]
             sian = data1["Sian"]
+            self.numbers = data1["numbers"]
             allObjects = []
             for i in good:
                 allObjects.append(i)
@@ -285,13 +326,13 @@ class Controller:
 
             if (self.empty == True):
                 holds = random.choice(sian)
-                self.gift.object(holds, allObjects, sian, good)
+                self.gift.object(holds, allObjects, sian, good, bad)
                 self.sian.hold(219, 364, holds)
                 self.holding_object = True
                 self.empty = False
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
 
 
             self.reset("assets/GameScreen.PNG")
@@ -361,28 +402,60 @@ class Controller:
 
 
             self.crow.update()
+            if (len(self.hearts) == 0):
+                self.state = "GAMEOVER"
+                self.gameOver()
 
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                      sys.exit()
 
-            if (self.heart == 0):
-                self.state == "GAMEOVER"
-
+    def restart(self):
+        for i in self.deadH:
+            self.hearts.add(i)
+        self.score = 0
+        self.scorepic10.change(self.numbers, self.score//10)
+        self.scorepic1.change(self.numbers, self.score%10)
+        self.scorepic10.final(200, 93, 40, 40)
+        self.scorepic1.final(250, 93, 40, 40)
 
     def gameOver(self):
-        while (self.state == "GAMEOVER"):
+        while self.state == "GAMEOVER":
+
+            self.scorepic10.final(1300, 147, 70, 70)
+            self.scorepic1.final(1360, 147, 70, 70)
+
+            with open("src/data.json", "r") as jsonFile2:
+                data2 = json.load(jsonFile2)
+            most = int(data2["high"])
+            if self.score > most:
+                data2["high"] = self.score
+            with open("src/data.json", "w") as jsonFile3:
+                json.dump(data2, jsonFile3)
+            jsonFile3.close()
+            with open("src/data.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+            highest = data["high"]
+            self.scoreH10.change(self.numbers, highest//10)
+            self.scoreH1.change(self.numbers, highest%10)
+
+            
+            self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,) + (self.scorepic,) + (self.scoreH,))
+            self.reset("assets/GameOverScreen_FullDisplay.PNG")
 
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
-
-               self.state = "START"
-    
+                self.restart()
+                self.state = "START"
+                self.mainLoop()    
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
-               self.state = "GAME"
-            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
+                self.restart()
+                self.gameLoop()
 
 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                     sys.exit()
 
 
 
