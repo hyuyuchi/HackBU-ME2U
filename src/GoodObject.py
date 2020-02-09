@@ -13,4 +13,5 @@ class GoodObject(pygame.sprite.Sprite):
         self.y = y
 
     def update(self, num, numx):
-        self.
+        self.rect.x += 30
+        self.rect.y +=
