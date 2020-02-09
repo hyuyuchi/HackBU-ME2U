@@ -231,7 +231,8 @@ class Controller:
                         if self.num > 0:
                             self.num -= 50
                             print(self.num, self.numx)
-
+                    if event.key == pygame.K_1:
+                        sys.exit()
                     if event.type == pygame.QUIT:
                         sys.exit()
                             
@@ -248,7 +249,7 @@ class Controller:
 
             self.crow.update()
             #self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
-            self.reset("assets/GameScreen.PNG")
+            #self.reset("assets/GameScreen.PNG")
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
