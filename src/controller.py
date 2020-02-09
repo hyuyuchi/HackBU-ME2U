@@ -358,6 +358,11 @@ class Controller:
     def restart(self):
         for i in self.deadH:
             self.hearts.add(i)
+        for i in self.hearts:
+            self.hearts.remove(i)
+            self.deadH.add(i)
+        for i in self.deadH:
+            self.hearts.add(i)
         self.score = 0
         self.scorepic10.change(self.numbers, self.score//10)
         self.scorepic1.change(self.numbers, self.score%10)
