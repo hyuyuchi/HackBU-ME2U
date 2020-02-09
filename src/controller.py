@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 import time
+import json
 from src import Button
 from src import Line
 from src import Chia
@@ -241,15 +242,28 @@ class Controller:
                      sys.exit()
 
 
+            with open("src/data.json", "r") as jsonFile1:
+                data1 = json.load(jsonFile1)
+            good = data1["GoodObjects"]
+            bad = data1["BadObjects"]
+            sian = data1["Sian"]
+            allObjects = []
+            for i in good:
+                allObjects.append(i)
+            for j in bad:
+                allObjects.append(j)
+
+
+
             if (self.empty == True):
-                holds = random.choice(["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"])
-                self.gift.object(holds)
+                holds = random.choice(sian)
+                self.gift.object(holds, allObjects, sian)
                 self.sian.hold(219, 364, holds)
                 self.holding_object = True
                 self.empty = False
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,))
 
 
             self.reset("assets/GameScreen.PNG")
@@ -275,6 +289,7 @@ class Controller:
                         if event.key == pygame.K_SPACE:
                             self.sian.throw(219, 364)
                             self.holding_object = False
+
                             self.fly()
                             
 

@@ -13,6 +13,7 @@ class Gift(pygame.sprite.Sprite):
         self.y = y
         self.h = h
         self.w = w
+        self.imageNum = 0
 
     def update(self, num, numx):
 
@@ -23,6 +24,11 @@ class Gift(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def object(self, image):
-        self.image = pygame.transform.scale((pygame.image.load(image).convert_alpha()), (self.h,self.w))
+    def object(self, image, objects, sian):
+
+        for i in range(len(sian)):
+            if sian[i] == image:
+                self.imageNum = i
+        theimage = objects[self.imageNum]
+        self.image = pygame.transform.scale((pygame.image.load(theimage).convert_alpha()), (self.h,self.w))
 
