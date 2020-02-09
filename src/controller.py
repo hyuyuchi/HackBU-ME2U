@@ -48,10 +48,16 @@ class Controller:
         self.hearts = pygame.sprite.Group()
         for i in range(3):
             x = 170 + 50 * i
-            y = 20
-            self.hearts.add(Button.Button(x, y, 50, 50, "assets/Heart.PNG"))
-
+            y = 13
+            self.hearts.add(Button.Button(x, y, 70, 70, "assets/Heart.PNG"))
         self.deadH = pygame.sprite.Group()
+
+ 
+        self.scorepic10 = Button.Button(200, 93, 40, 40, "assets/0.PNG")
+        self.scorepic1 = Button.Button(250, 93, 40, 40, "assets/0.PNG")       
+        self.scorepic = pygame.sprite.Group((self.scorepic10,) + (self.scorepic1,))    
+        self.numbers = [0]
+
 
         #GameOver buttons
         self.endPB = Button.Button(1100, 370, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
@@ -65,7 +71,7 @@ class Controller:
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
-
+        self.score = 0
         self.state = "START"
 
         self.linestate = "n"
@@ -242,12 +248,17 @@ class Controller:
                     dead = hearts[-1]
                     self.hearts.remove(dead)
                     self.deadH.add(dead)
-                    print(len(self.hearts))
+                    #print(len(self.hearts))
+                else:
+                    self.score += 1
+                    self.scorepic10.change(self.numbers, self.score//10)
+                    self.scorepic1.change(self.numbers, self.score%10)
+                    print(self.score//10, self.score%10)
                 self.gift.reset()
                 self.gameLoop()
 
             self.crow.update()
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
             self.show.draw(self.screen)
             self.reset("assets/GameScreen.PNG")
 
@@ -268,6 +279,7 @@ class Controller:
             good = data1["GoodObjects"]
             bad = data1["BadObjects"]
             sian = data1["Sian"]
+            self.numbers = data1["numbers"]
             allObjects = []
             for i in good:
                 allObjects.append(i)
@@ -284,7 +296,7 @@ class Controller:
                 self.empty = False
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,) + (self.hearts,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
 
 
             self.reset("assets/GameScreen.PNG")
@@ -344,19 +356,26 @@ class Controller:
     def restart(self):
         for i in self.deadH:
             self.hearts.add(i)
-
-
+        self.score = 0
+        self.scorepic10.change(self.numbers, self.score//10)
+        self.scorepic1.change(self.numbers, self.score%10)
 
     def gameOver(self):
         while self.state == "GAMEOVER":
-            self.restart()
-            self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,))
+
+            self.scorepic10.final(1300, 147, 70, 70)
+            self.scorepic1.final(1360, 147, 70, 70)
+
+
+
+
+            #self.restart()
+            self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,) + (self.scorepic,))
             self.reset("assets/GameOverScreen_FullDisplay.PNG")
+
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
                 self.state = "START"
-                self.mainLoop()
-
-    
+                self.mainLoop()    
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
                 self.gameLoop()
 

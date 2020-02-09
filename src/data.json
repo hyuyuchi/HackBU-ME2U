@@ -1,5 +1,6 @@
 {
     "GoodObjects" : ["assets/Bouquet .PNG", "assets/Choco.PNG", "assets/GiftBoxGreen.PNG", "assets/GiftBoxPink.PNG", "assets/LoveLetter.PNG", "assets/RIng.PNG"], 
     "BadObjects" : ["assets/DeadMouse.PNG", "assets/PaperBall.PNG", "assets/Rock.PNG"], 
-    "Sian" : ["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"]
+    "Sian" : ["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"],
+    "numbers" : ["assets/0.PNG", "assets/1.PNG", "assets/2.PNG", "assets/3.PNG", "assets/4.PNG", "assets/5.PNG", "assets/6.PNG", "assets/7.PNG", "assets/8.PNG", "assets/9.PNG"]
 }
