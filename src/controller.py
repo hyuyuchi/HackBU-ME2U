@@ -37,7 +37,7 @@ class Controller:
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(50, 600, 10, 10, "assets/Dot.PNG")
 	#self.chia = Chia.Chia(1800, 200)
-        self.sian = Sian.Sian(300, 300, "assets/Sian_Empty.PNG")
+        self.sian = Sian.Sian(20, 20, 20, 20,"assets/Sian_Empty.PNG")
 
 
 
@@ -45,9 +45,9 @@ class Controller:
 
 
 
-#______________________________________________________________________________LOAD SPRITES
+#-----------------------------------------------------------------------------------------------------------LOAD SPRITES
 
-        self.sian = pygame.sprite.Group()
+
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
@@ -197,6 +197,7 @@ class Controller:
             if self.state == "GAME":
                 self.gameLoop()
 
+#------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
 
 
@@ -209,27 +210,28 @@ class Controller:
                      sys.exit()
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
+
+
+            self.sian.empty()
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
             self.reset("assets/GameScreen.PNG")
 
-
-       
     
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_0:
-
+                        self.linestate = "y"
                         self.num += 50
                         self.numx += 8
-                        self.linestate = "y"
+
                         print(self.num, self.numx)
                     if event.key == pygame.K_9:
-
+                        self.linestate = "y"
                         self.numx -= 8
                         if self.num > 0:
                             self.num -= 50
                             print(self.num, self.numx)
-                        self.linestate = "y"
+
                     if event.type == pygame.QUIT:
                         sys.exit()
                             
@@ -245,8 +247,8 @@ class Controller:
 
 
             self.crow.update()
-            #self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
-            #self.reset("assets/GameScreen.PNG")
+            #self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
+            self.reset("assets/GameScreen.PNG")
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
