@@ -49,7 +49,7 @@ class Controller:
 
 
         #GameOver buttons
-        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG)
+        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
         self.endPB = Button.Button(35, 956, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
 
 
@@ -309,18 +309,18 @@ class Controller:
                      sys.exit()
 
             if (heart == 0):
-              self.state == "GAMEOVER"
-#--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
+                self.state == "GAMEOVER"
+                #--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
     def GameOver(self):
         while (self.state == "GAMEOVER"):
             self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
 
-                if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.state = "START"
+            if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
+                self.state = "START"
     
-                if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.state = "GAME"
+            if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
+                self.state = "GAME"
 
 
 
