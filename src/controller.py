@@ -37,7 +37,10 @@ class Controller:
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(50, 600, 10, 10, "assets/Dot.PNG")
 	#self.chia = Chia.Chia(1800, 200)
-        self.sian = Sian.Sian(50, 435, 219, 364,"assets/Sian_Empty.PNG")
+        self.sian = Sian.Sian(50, 435, 219, 364, "assets/Sian_Empty.PNG")
+        self.empty = True
+        self.holding_object = False
+        
 
 
 
@@ -50,6 +53,7 @@ class Controller:
 
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
+
 
         self.state = "START"
 
@@ -210,9 +214,18 @@ class Controller:
                      sys.exit()
 
 
+            if (self.empty == True):
+               holds = random.choice(["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"])
+               self.sian.hold(219, 364, holds)
+               self.holding_object = True
+               self.empty = False
 
+            if (self.holding_object == True):
+               for event in pygame.event.get():
+                   if event.type == pygame.KEYDOWN:
+                      if event.key == pygame.K_SPACE:
+                         self.sian.throw(219, 364)
 
-            self.sian.empty(364,219)
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
             self.reset("assets/GameScreen.PNG")
 

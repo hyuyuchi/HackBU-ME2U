@@ -13,14 +13,13 @@ class Sian(pygame.sprite.Sprite):
          self.direction = "right"
 
 
-     def hold(self, w, h):
-         holds = random.choice(["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian GiftBoxPink.PNG","assets/Sian_LoveLetter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"])
+     def hold(self, w, h, holds):
          self.image = pygame.transform.scale(pygame.image.load(holds).convert_alpha(),(w,h))
 
-     def throw(self,w, h):
-             self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Throw.PNG").convert_alpha(),(w,h))
+     def throw(self, w, h):
+         self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Throw.PNG").convert_alpha(),(w,h))
 
 
-     def empty(self,w, h):
+     def empty(self, w, h):
          self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Empty.PNG").convert_alpha(),(h,w))
 
