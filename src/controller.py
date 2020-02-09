@@ -213,6 +213,11 @@ class Controller:
                 self.good.reset()
                 self.gameLoop()
 
+            catch = pygame.sprite.collide_rect(self.chia, self.good)
+            if catch:
+                self.good.reset()
+                self.gameLoop()
+
             self.crow.update()
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
             self.reset("assets/GameScreen.PNG")
@@ -240,7 +245,7 @@ class Controller:
                       if event.key == pygame.K_SPACE:
                          self.sian.throw(219, 364)
 
-
+            self.good.imagee(holds)
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
 
 

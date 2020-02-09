@@ -11,6 +11,8 @@ class GoodObject(pygame.sprite.Sprite):
         self.rect.y = y
         self.x = x
         self.y = y
+        self.h = h
+        self.w = w
 
     def update(self, num, numx):
 
@@ -20,3 +22,6 @@ class GoodObject(pygame.sprite.Sprite):
     def reset(self):
         self.rect.x = self.x
         self.rect.y = self.y
+
+    def imagee(self, image):
+        self.image = pygame.transform.scale((pygame.image.load(image).convert_alpha()), (self.h,self.w))
