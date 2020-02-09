@@ -42,16 +42,20 @@ class Controller:
         self.sian = Sian.Sian(50, 435, 219, 364, "assets/Sian_Empty.PNG")
         self.empty = True
         self.holding_object = False
-        
+     
 
         self.gift = Gift.Gift(150, 600, 60, 60, "assets/LoveLetter.PNG")
+        self.heart = 3
 
 
+        #GameOver buttons
+        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG)
+        self.endPB = Button.Button(35, 956, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
 
 
 #-----------------------------------------------------------------------------------------------------------LOAD SPRITES
 
-
+        
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
@@ -73,7 +77,7 @@ class Controller:
         self.screen.blit(self.background, (0, 0))      
         self.show.draw(self.screen)          
         pygame.display.flip()
-
+#---------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
     def startLoop(self):
         pygame.key.set_repeat(1,10)
@@ -101,6 +105,7 @@ class Controller:
                 self.reset("assets/StartScreen_FullDisplay.png")
 
             #===========================================================================================================================================================
+
             while self.state == "INSTRUCTION_1":
                 #exit button
                 for event in pygame.event.get():
@@ -296,16 +301,26 @@ class Controller:
 
 
 
-
-
             self.crow.update()
 
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                      sys.exit()
-                
 
+            if (heart == 0):
+              self.state == "GAMEOVER"
+#--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
+
+    def GameOver(self):
+        while (self.state == "GAMEOVER"):
+            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
+
+                if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.state = "START"
+    
+                if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.state = "GAME"
 
 
 
