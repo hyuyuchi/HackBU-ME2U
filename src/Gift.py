@@ -25,3 +25,4 @@ class Gift(pygame.sprite.Sprite):
 
     def object(self, image):
         self.image = pygame.transform.scale((pygame.image.load(image).convert_alpha()), (self.h,self.w))
+
