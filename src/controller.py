@@ -72,7 +72,7 @@ class Controller:
         self.walktimer = 0
         self.angry_timer = 0
         self.angryy = False
-        self.startwalk = False
+        self.startwalkk = False
 
 
         self.endRB = Button.Button(1150, 500, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
@@ -259,13 +259,13 @@ class Controller:
 
             catch = pygame.sprite.collide_rect_ratio(0.5)(self.chia, self.gift)
             if catch:
-
                 if self.gift.state == "GOOD":
                    self.score += 1
                    self.chia.happy(221, 365)
                    self.happyy = True
-                   self.startwalk = True
                    self.score += 1
+                   self.chia.changeDirection()
+                   self.chia.walkindex = 0
                    self.scorepic10.change(self.numbers, self.score//10)
                    self.scorepic1.change(self.numbers, self.score%10)
                    print(self.score//10, self.score%10)
@@ -297,6 +297,7 @@ class Controller:
                 self.gameLoop()
 
             self.crow.update()
+            self.chia.walk()
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
             self.show.draw(self.screen)
             self.reset("assets/GameScreen.PNG")
@@ -369,31 +370,36 @@ class Controller:
                 self.sian.empty(219, 364)
                 self.empty = True
 
-            if (self.happy_timer<=50 and self.happyy == True):
-                self.happy_timer += 1
 
-            if (self.happy_timer>=50):
-                if (self.startwalk == True):
-                    self.chia.startwalk()
-                    self.happyy + False
-                    self.startwalk == False
-                elif self.walktimer <= random.randrange(5,11):
-                    self.walk()
-                    self.chia.update()
-                    self.walktimer += 1
-                elif self.walktimer > random.randrange(5,11):
-                    self.chia.default(221, 365)
-                    
-                    self.walktimer = 0
-                    self.happy_timer = 0
-
-            if (self.angry_timer< 50 and self.angryy == True):
+            if (self.angry_timer< 10 and self.angryy == True):
                 self.angry_timer += 1
+
+
+            elif (self.happy_timer< 10 and self.happyy == True):
+                self.happy_timer += 1
 
             else:
                 self.angry_timer = 0
                 self.angryy = False
+                self.happyy = False
+                self.happy_timer = 0
+                self.chia.walkindex = -1
                 self.chia.default(221, 365)
+ 
+            '''elif self.happy_timer == 10 :
+                 self.chia.walkindex = 0
+                 self.happy_timer = 0
+                 self.happyyy = False
+            if self.walktimer < random.randrange(5,10):
+                 self.walktimer += 1
+
+            else:
+               self.chia.walkindex = -1
+               self.walktimer = 0
+             
+               self.chia.default(221, 365)'''
+
+
                             
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
@@ -407,6 +413,7 @@ class Controller:
 
 
             self.crow.update()
+            self.chia.update()
             if (len(self.hearts) == 0):
                 self.state = "GAMEOVER"
                 self.gameOver()

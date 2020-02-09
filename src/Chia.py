@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 class Chia(pygame.sprite.Sprite):
      def __init__(self, x, y, w, h, image, image1, image2, image3, image4):
          pygame.sprite.Sprite.__init__(self)
@@ -9,6 +10,8 @@ class Chia(pygame.sprite.Sprite):
          self.image2 = pygame.transform.scale(pygame.image.load(image2).convert_alpha(), (w,h))
          self.image3 = pygame.transform.scale(pygame.image.load(image3).convert_alpha(), (w,h))
          self.image4 = pygame.transform.scale(pygame.image.load(image4).convert_alpha(), (w,h))
+         self.images =[self.image,self.image1,self.image2,self.image3,self.image4 ]
+         self.walkindex = -1
          self.rect = self.image.get_rect()
          self.rect.x = x
          self.rect.y = y
@@ -34,6 +37,10 @@ class Chia(pygame.sprite.Sprite):
             self.direction = random.choice(["right","left"])
          elif (self.rect.x < (1700/2)+100):
             self.direction = "right"
+            self.image1 = pygame.transform.flip(self.image1, True, False)
+            self.image2 = pygame.transform.flip(self.image2, True, False)
+            self.image3 = pygame.transform.flip(self.image3, True, False)
+            self.image4 = pygame.transform.flip(self.image4, True, False)
          elif self.rect.x > 1700-100:
             self.direction = "left"
 
@@ -48,32 +55,43 @@ class Chia(pygame.sprite.Sprite):
              self.image = pygame.transform.scale(pygame.image.load("assets/Chia_Angry.PNG").convert_alpha(),(w,h))
 
 
-     def startwalk (self):
-         self.image == self.image1
-
-     def walk(self):
-         self.changeDirection()
-         if self.image == self.image1:
-            self.image = self.image2
-
-         elif self.image == self.image2:
-            self.image = self.image3
-
-         elif self.image == self.image3:
-            self.image = self.image4
-
-         elif self.image == self.image4:
-            self.image = self.image1
+     #def startwalk (self):
+         #self.image = self.image1
 
      def update (self):
-         if self.direction == "left":
-            self.rect.x -= 10
+         if self.walkindex != -1:
+            self.walk()
+            if self.direction == "left":
+               self.rect.x -= 10
 
-         else:
-            self.rect.x += 10
+            else:
+               self.rect.x += 10
 
-        
+    
+     def walk(self):
+         if (self.walkindex != -1):
+            if (self.walkindex == len(self.images)):
+               self.walkindex = 0
+            self.image = self.images[self.walkindex]
+            self.walkindex += 1
 
+         '''
+         self.image = self.image1
+         self.update()
+
+         self.image = self.image2
+         self.update()
+
+         self.image = self.image3
+         self.update()
+
+         self.image = self.image4
+         self.update()
+
+         self.image = self.image1
+         self.update()
+
+         '''
             
 
 
