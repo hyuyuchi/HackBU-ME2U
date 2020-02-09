@@ -42,15 +42,21 @@ class Controller:
         self.sian = Sian.Sian(50, 435, 219, 364, "assets/Sian_Empty.PNG")
         self.empty = True
         self.holding_object = False
-     
 
         self.gift = Gift.Gift(150, 600, 60, 60, "assets/LoveLetter.PNG")
-        self.heart = 3
 
+        self.hearts = pygame.sprite.Group()
+        for i in range(3):
+            x = 170 + 50 * i
+            y = 20
+            self.hearts.add(Button.Button(x, y, 50, 50, "assets/Heart.PNG"))
+
+        self.deadH = pygame.sprite.Group()
 
         #GameOver buttons
-        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
-        self.endPB = Button.Button(35, 956, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
+        self.endPB = Button.Button(1100, 370, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
+
+        self.endRB = Button.Button(1150, 500, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
 
 
 #-----------------------------------------------------------------------------------------------------------LOAD SPRITES
@@ -60,16 +66,17 @@ class Controller:
         self.line = pygame.sprite.Group()
 
 
-        self.state = "START"
+        self.state = "GAMEOVER"
 
         self.linestate = "n"
         self.num = 500
         self.numx = 400
 
     def mainLoop(self):
-        while self.state == "START":
+        if self.state == "START":
             self.startLoop()
-
+        elif self.state == "GAMEOVER":
+            self.gameOver()
 
     def reset(self, image):
         self.theline.reset()
@@ -219,22 +226,36 @@ class Controller:
 
             fall = pygame.sprite.collide_rect(self.ground, self.gift) or self.gift.rect.x > 1710
             if fall:
+                if self.gift.state == "GOOD":
+                    hearts = self.hearts.sprites()
+                    dead = hearts[-1]
+                    self.hearts.remove(dead)
+                    self.deadH.add(dead)
+                    print(len(self.hearts))
                 self.gift.reset()
                 self.gameLoop()
 
             catch = pygame.sprite.collide_rect_ratio(0.5)(self.chia, self.gift)
             if catch:
+                if self.gift.state == "BAD":
+                    hearts = self.hearts.sprites()
+                    dead = hearts[-1]
+                    self.hearts.remove(dead)
+                    self.deadH.add(dead)
+                    print(len(self.hearts))
                 self.gift.reset()
                 self.gameLoop()
 
             self.crow.update()
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,))
+            self.show.draw(self.screen)
             self.reset("assets/GameScreen.PNG")
 
 
 
     def gameLoop(self):
         pygame.key.set_repeat(1,50)
+
         while True:
            #exit button
             for event in pygame.event.get():
@@ -257,13 +278,13 @@ class Controller:
 
             if (self.empty == True):
                 holds = random.choice(sian)
-                self.gift.object(holds, allObjects, sian, good)
+                self.gift.object(holds, allObjects, sian, good, bad)
                 self.sian.hold(219, 364, holds)
                 self.holding_object = True
                 self.empty = False
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.chia,) + (self.hearts,))
 
 
             self.reset("assets/GameScreen.PNG")
@@ -311,28 +332,38 @@ class Controller:
 
 
             self.crow.update()
+            if (len(self.hearts) == 0):
+                self.state = "GAMEOVER"
+                self.gameOver()
 
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                      sys.exit()
 
-            if (self.heart == 0):
-                self.state == "GAMEOVER"
+    def restart(self):
+        for i in self.deadH:
+            self.hearts.add(i)
+
 
 
     def gameOver(self):
-        while (self.state == "GAMEOVER"):
-
+        while self.state == "GAMEOVER":
+            self.restart()
+            self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,))
+            self.reset("assets/GameOverScreen_FullDisplay.PNG")
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
-
-               self.state = "START"
+                #self.state = "START"
+                #self.mainLoop()
+                self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,))
     
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
-               self.state = "GAME"
-            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
+                self.gameLoop()
 
 
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                     sys.exit()
 
 
 
