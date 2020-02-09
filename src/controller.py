@@ -7,6 +7,7 @@ from src import Line
 #from src import Chia
 from src import Sian
 from src import Crow
+from src import GoodObject
 
 class Controller:
 
@@ -42,7 +43,7 @@ class Controller:
         self.holding_object = False
         
 
-
+        self.good = GoodObject.GoodObject(150, 600, 60, 60, "assets/LoveLetter.PNG")
 
 
 
@@ -203,6 +204,19 @@ class Controller:
 
 #------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
+    def fly(self):
+        while True:
+            self.good.update(self.num, self.numx)
+
+            fall = pygame.sprite.collide_rect(self.ground, self.good)
+            if fall:
+                self.good.reset()
+                self.gameLoop()
+
+            self.crow.update()
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,))
+            self.reset("assets/GameScreen.PNG")
+
 
 
     def gameLoop(self):
@@ -226,7 +240,7 @@ class Controller:
                       if event.key == pygame.K_SPACE:
                          self.sian.throw(219, 364)
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,))
             self.reset("assets/GameScreen.PNG")
 
     
@@ -247,10 +261,10 @@ class Controller:
                             print(self.num, self.numx)
                     if event.key == pygame.K_1:
                         sys.exit()
-                    if event.type == pygame.QUIT:
-                        sys.exit()
+                    if event.key == pygame.K_2:
+                        #self.good.update(self.num, self.numx)
+                        self.fly()
                             
-
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
                 self.line.add((self.theline,))
@@ -261,6 +275,10 @@ class Controller:
                     self.linestate = "n"
 
 
+
+
+
+            #self.good.update(self.num, self.numx)
             self.crow.update()
             #self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
             #self.reset("assets/GameScreen.PNG")

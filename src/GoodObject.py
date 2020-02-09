@@ -13,5 +13,10 @@ class GoodObject(pygame.sprite.Sprite):
         self.y = y
 
     def update(self, num, numx):
+
         self.rect.x += 30
-        self.rect.y +=
+        self.rect.y = (((-1/num) * (self.rect.x-numx-250) ** 2) - 250) * -1
+
+    def reset(self):
+        self.rect.x = self.x
+        self.rect.y = self.y
