@@ -214,7 +214,7 @@ class Controller:
                 self.gameLoop()
 
             self.crow.update()
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
             self.reset("assets/GameScreen.PNG")
 
 
@@ -241,7 +241,7 @@ class Controller:
                          self.sian.throw(219, 364)
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
 
 
             self.reset("assets/GameScreen.PNG")
