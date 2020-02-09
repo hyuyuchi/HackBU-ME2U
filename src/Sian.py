@@ -1,29 +1,26 @@
 import pygame
 import random
 class Sian(pygame.sprite.Sprite):
-     def __init__(self, x, y, h, w, image, direction):
+     def __init__(self, x, y, image, w=1700, h=956):
          pygame.sprite.Sprite.__init__(self)
 
-         self.image = pygame.transform.scale(pygame.image.load(image).convert_alpha()),(h,w))
-         self.rect = image.rect.get_rect()
-
-         #objects
-
-         self.object.
+         self.image = pygame.transform.scale(pygame.image.load(image).convert_alpha(),(w,h))
+         self.rect = self.image.get_rect()
          self.rect.x = x
          self.rect.y = y
-         self.height = h
          self.width = w
+         self.height = h
          self.direction = "right"
 
+
      def hold (self):
-         hold = random.choice(["assets/Bouquet", "assets/Choco", "assets/GiftBoxGreen","assets/GiftBoxPink","assets/LoveLetter","assets/Ring", "assets/DeadMouse", "assets/PaperBall", "assets/Rock"])
-         self.image = pygame.image.load(hold).convert_alpha())
+         holds = random.choice(["assets/Bouquet.PNG", "assets/Choco.PNG", "assets/GiftBoxGreen.PNG","assets/GiftBoxPink.PNG","assets/LoveLetter.PNG","assets/Ring.PNG", "assets/DeadMouse.PNG", "assets/PaperBall.PNG", "assets/Rock.PNG"])
+         self.image = pygame.image.load(holds).convert_alpha()
 
-     def throw(self):
-             self.image = pygame.image.load("assets/Sian_Throw").convert_alpha())
+     def throw(self,w=1700, h=956):
+             self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Throw.PNG").convert_alpha(),(w,h))
 
 
-     def empty(self):
-         self.image = pygame.image.load("assets/Sian_Throw").convert_alpha())
+     def empty(self,w=1700, h=956):
+         self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Empty.PNG").convert_alpha(),(w,h))
 

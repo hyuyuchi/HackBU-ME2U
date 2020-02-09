@@ -4,7 +4,10 @@ import random
 import time
 from src import Button
 from src import Line
+#from src import Chia
+from src import Sian
 from src import Crow
+
 class Controller:
 
     def __init__(self, width=1700, height=956):
@@ -33,6 +36,8 @@ class Controller:
         self.ground = Button.Button(0, 793, 163, 1700, "assets/GameScreen_Ground.PNG")
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(50, 600, 10, 10, "assets/Dot.PNG")
+	#self.chia = Chia.Chia(1800, 200)
+        self.sian = Sian.Sian(300, 300, "assets/Sian_Empty.PNG")
 
 
 
@@ -40,7 +45,9 @@ class Controller:
 
 
 
+#______________________________________________________________________________LOAD SPRITES
 
+        self.sian = pygame.sprite.Group()
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
@@ -52,7 +59,7 @@ class Controller:
 
     def mainLoop(self):
         while self.state == "START":
-            self.gameLoop()
+            self.startLoop()
 
 
     def reset(self, image):
@@ -63,8 +70,7 @@ class Controller:
         pygame.display.flip()
 
 
-
-    def gameLoop(self):
+    def startLoop(self):
         pygame.key.set_repeat(1,10)
         while True:
             while self.state == "START":
@@ -187,19 +193,32 @@ class Controller:
 
                 self.show = pygame.sprite.Group((self.insrXB,) + (self.insrLeftB,))
                 self.reset("assets/InstructionScreen_PG5.PNG")
+    
+            if self.state == "GAME":
+                self.gameLoop()
 
-            #===========================================================================================================================================================
 
+    def gameLoop(self):
+        pygame.key.set_repeat(1,10)
+        while True:
 
             while self.state == "GAME":
                #exit button
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         sys.exit()
+
+
+
+                #self.sian.empty()
+                #self.sian.hold()
+                #self.crow.update()
+            
+
                 self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
                 self.reset("assets/GameScreen.PNG")
 
-                #self.crow.update()
+                self.crow.update()
            
     
                 for event in pygame.event.get():
@@ -219,6 +238,8 @@ class Controller:
                             if self.num > 0:
                                 self.num -= 50
                             print(self.num, self.numx)
+                        #if event.key ==pygame.KEYSPACE:
+                            
 
                 while self.linestate == "y":
                     self.theline.update(self.num, self.numx)

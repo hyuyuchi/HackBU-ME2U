@@ -1,38 +1,38 @@
 import pygame
 import random
 class Chia(pygame.sprite.Sprite):
-     def __init__(self, x, y, h, w, image, direction):
+     def __init__(self, x, y, w=1700, h=956):
          pygame.sprite.Sprite.__init__(self)
 
-         self.image = pygame.transform.scale(pygame.image.load(image).convert_alpha()),(h,w))
-         self.rect = image.rect.get_rect()
+         self.image = pygame.transform.scale(pygame.image.load("assets/Chia_Standing.PNG").convert_alpha(),(w,h))
+         self.rect = self.image.get_rect()
          self.rect.x = x
          self.rect.y = y
-         self.height = h
          self.width = w
+         self.height = h
          self.direction = "left"
 
 
 
          #walking animation
          self.walking = []
-         self.walking.append(pygame.image.load("assets/Chia_Walking1+3)"
-         self.walking.append(pygame.image.load("assets/Chia_Walking2)"
-         self.walking.append(pygame.image.load("assets/Chia_Walking1+3)"
-         self.walking.append(pygame.image.load("assets/Chia_Walking4)"
+         self.walking.append(pygame.image.load("assets/Chia_Walking1+3.PNG"))
+         self.walking.append(pygame.image.load("assets/Chia_Walking2.PNG")
+         self.walking.append(pygame.image.load("assets/Chia_Walking1+3.PNG"))
+         self.walking.append(pygame.image.load("assets/Chia_Walking4.PNG"))
 
          self.index = 0
 
 
 
      def default(self)
-         self.image = pygame.image.load("assets/Chia_Standing").convert_alpha
+         self.image = pygame.image.load("assets/Chia_Standing.PNG").convert_alpha
 
 
      def happy(self):
          for i in range(3)
-             self.image = pygame.image.load("assets/Chia_Happy").convert_alpha
-         self.image = pygame.image.load("assets/Chia_Standing").convert_alpha
+             self.image = pygame.image.load("assets/Chia_Happy.PNG").convert_alpha
+         self.image = pygame.image.load("assets/Chia_Standing.PNG").convert_alpha
 
      def angry(self):
          for i in range(3)
@@ -51,7 +51,7 @@ class Chia(pygame.sprite.Sprite):
                        if self.index > len(self.walking):
                           self.index = 0
                    self.rect.x -= 1
-               self.image = pygame.image.load("assets/Chia_Standing").convert_alpha
+               self.image = pygame.image.load("assets/Chia_Standing.PNG").convert_alpha
                
 
             if self.direction = "right"
@@ -63,7 +63,7 @@ class Chia(pygame.sprite.Sprite):
                           self.index = 0
                    self.rect.x += 1
                self.image = pygame.transform.flip(self.walking, True, False)
-               self.image = pygame.image.load("assets/Chia_Standing").convert_alpha
+               self.image = pygame.image.load("assets/Chia_Standing.PNG").convert_alpha
          
 
          #To prevent going out of range
@@ -75,7 +75,7 @@ class Chia(pygame.sprite.Sprite):
                           self.index = 0
                    self.rect.x += 1
             self.image = pygame.transform.flip(self.walking, True, False)
-            self.image = pygame.image.load("assets/Chia_Standing").convert_alpha
+            self.image = pygame.image.load("assets/Chia_Standing.PNG").convert_alpha
 
          else self.rect.x > 2:
             if self.direction = "left":
@@ -84,7 +84,7 @@ class Chia(pygame.sprite.Sprite):
                        if self.index > len(self.walking):
                           self.index = 0
                    self.rect.x -= 1
-               self.image = pygame.image.load("assets/Chia_Standing").convert_alpha
+               self.image = pygame.image.load("assets/Chia_Standing.PNG").convert_alpha
          
                     
 
