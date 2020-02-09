@@ -205,20 +205,24 @@ class Controller:
 
     def fly(self):
         while True:
-            self.good.update(self.num, self.numx)
+            for event in pygame.event.get():
+               if event.type == pygame.QUIT:
+                   sys.exit()
 
-            fall = pygame.sprite.collide_rect(self.ground, self.good)
+            self.gift.update(self.num, self.numx)
+
+            fall = pygame.sprite.collide_rect(self.ground, self.gift) or self.gift.rect.x > 1710
             if fall:
-                self.good.reset()
+                self.gift.reset()
                 self.gameLoop()
 
-            catch = pygame.sprite.collide_rect(self.chia, self.good)
+            catch = pygame.sprite.collide_rect_ratio(0.5)(self.chia, self.gift)
             if catch:
-                self.good.reset()
+                self.gift.reset()
                 self.gameLoop()
 
             self.crow.update()
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,))
             self.reset("assets/GameScreen.PNG")
 
 
@@ -234,13 +238,13 @@ class Controller:
 
             if (self.empty == True):
                 holds = random.choice(["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"])
-                self.good.imagee(holds)
+                self.gift.object(holds)
                 self.sian.hold(219, 364, holds)
                 self.holding_object = True
                 self.empty = False
 
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
+            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,))
 
 
             self.reset("assets/GameScreen.PNG")
@@ -256,8 +260,7 @@ class Controller:
                         print(self.num, self.numx)
                     if event.key == pygame.K_9:
                         self.linestate = "y"
-
-                        if self.num > 400:
+                        if self.num > 450:
                             self.num -= 50
                             self.numx -= 15
                             print(self.theline.rect.x, self.numx)
@@ -265,10 +268,9 @@ class Controller:
                         sys.exit()
                     if (self.holding_object == True):
                         if event.key == pygame.K_SPACE:
-                           self.sian.throw(219, 364)
+                            self.sian.throw(219, 364)
                            
-                        #self.good.update(self.num, self.numx)
-                        self.fly()
+                            self.fly()
                             
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
@@ -283,7 +285,7 @@ class Controller:
 
 
 
-            #self.good.update(self.num, self.numx)
+            #self.gift.update(self.num, self.numx)
             self.crow.update()
             #self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
             #self.reset("assets/GameScreen.PNG")
