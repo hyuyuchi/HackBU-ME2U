@@ -315,20 +315,22 @@ class Controller:
                 if event.type == pygame.QUIT:
                      sys.exit()
 
-            if (self.heart == 3):
-                self.state = "GAMEOVER"
-             
-#--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
+
+            if (heart == 0):
+                self.state == "GAMEOVER"
+                #--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
     def gameOver(self):
         while (self.state == "GAMEOVER"):
 
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
+
                self.state = "START"
     
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
                self.state = "GAME"
             self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
+
 
 
 
