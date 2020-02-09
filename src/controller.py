@@ -196,12 +196,11 @@ class Controller:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         sys.exit()
-
-
-                self.crow.update()
-            
                 self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
                 self.reset("assets/GameScreen.PNG")
+
+                #self.crow.update()
+           
     
                 for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
@@ -233,10 +232,13 @@ class Controller:
                         if event.type == pygame.QUIT:
                             sys.exit()
 
+                self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
+                self.reset("assets/GameScreen.PNG")
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
 
-
-
-
+                
 
 
 
