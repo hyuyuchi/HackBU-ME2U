@@ -234,18 +234,19 @@ class Controller:
 
 
             if (self.empty == True):
-               holds = random.choice(["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"])
-               self.sian.hold(219, 364, holds)
-               self.holding_object = True
-               self.empty = False
+                holds = random.choice(["assets/Sian_Bouquet.PNG", "assets/Sian_Choco.PNG", "assets/Sian_GiftBoxGreen.PNG","assets/Sian_GiftBoxPink.PNG","assets/Sian_Letter.PNG","assets/Sian_Ring.PNG", "assets/Sian_DeadMouse.PNG", "assets/Sian_PaperBall.PNG", "assets/Sian_Rock.PNG"])
+                self.good.imagee(holds)
+                self.sian.hold(219, 364, holds)
+                self.holding_object = True
+                self.empty = False
 
             if (self.holding_object == True):
-               for event in pygame.event.get():
-                   if event.type == pygame.KEYDOWN:
-                      if event.key == pygame.K_SPACE:
-                         self.sian.throw(219, 364)
+                for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                       if event.key == pygame.K_SPACE:
+                          self.sian.throw(219, 364)
 
-            self.good.imagee(holds)
+            
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
 
 
@@ -266,7 +267,7 @@ class Controller:
                         if self.num > 400:
                             self.num -= 50
                             self.numx -= 15
-                            print(self.num, self.numx)
+                            print(self.theline.rect.x, self.numx)
                     if event.key == pygame.K_1:
                         sys.exit()
                     if event.key == pygame.K_2:
