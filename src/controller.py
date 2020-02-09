@@ -366,28 +366,30 @@ class Controller:
                 self.sian.empty(219, 364)
                 
 
-            if (self.happy_timer<=30 and self.happyy == True):
+            if (self.happy_timer<=50 and self.happyy == True):
                 self.happy_timer += 1
 
-            if (self.happy_timer>=30):
+            if (self.happy_timer>=50):
                 if (self.startwalk == True):
                     self.chia.startwalk()
+                    self.happyy + False
                     self.startwalk == False
-                elif self.walktimer < random.randrange(5,11):
+                elif self.walktimer <= random.randrange(5,11):
                     self.walk()
                     self.chia.update()
                     self.walktimer += 1
-                else:
+                elif self.walktimer > random.randrange(5,11):
                     self.chia.default(221, 365)
                     self.empty = True
                     self.walktimer = 0
                     self.happy_timer = 0
 
-            if (self.angry_timer<30 and self.angryy == True):
+            if (self.angry_timer< 50 and self.angryy == True):
                 self.angry_timer += 1
 
             else:
                 self.angry_timer = 0
+                self.angryy = False
                 self.chia.default(221, 365)
                             
             while self.linestate == "y":
