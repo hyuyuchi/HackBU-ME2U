@@ -294,7 +294,9 @@ class Controller:
                             
 
             if (self.holding_object == False):
-                self.sian.empty(219, 364)
+                for i in range(10):
+                    self.sian.empty(219, 364)
+                self.empty = True
 
                             
             while self.linestate == "y":
@@ -316,7 +318,7 @@ class Controller:
                      sys.exit()
 
 
-            if (heart == 0):
+            if (self.heart == 0):
                 self.state == "GAMEOVER"
                 #--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
