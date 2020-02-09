@@ -14,6 +14,9 @@ class Gift(pygame.sprite.Sprite):
         self.h = h
         self.w = w
         self.imageNum = 0
+        self.state = "GOOD"
+
+
 
     def update(self, num, numx):
 
@@ -24,11 +27,15 @@ class Gift(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
-    def object(self, image, objects, sian):
+    def object(self, image, objects, sian, good):
 
         for i in range(len(sian)):
             if sian[i] == image:
                 self.imageNum = i
         theimage = objects[self.imageNum]
         self.image = pygame.transform.scale((pygame.image.load(theimage).convert_alpha()), (self.h,self.w))
-
+        if theimage in good:
+            self.state = "GOOD"
+        else:
+            self.state = "BAD"
+        print(self.state)

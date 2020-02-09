@@ -257,7 +257,7 @@ class Controller:
 
             if (self.empty == True):
                 holds = random.choice(sian)
-                self.gift.object(holds, allObjects, sian)
+                self.gift.object(holds, allObjects, sian, good)
                 self.sian.hold(219, 364, holds)
                 self.holding_object = True
                 self.empty = False
@@ -308,7 +308,7 @@ class Controller:
                 if event.type == pygame.QUIT:
                      sys.exit()
 
-            if (heart == 0):
+            if (self.heart == 0):
                 self.state == "GAMEOVER"
                 #--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
