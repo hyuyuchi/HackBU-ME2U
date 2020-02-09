@@ -288,7 +288,16 @@ class Controller:
                     if (self.holding_object == True):
                         if event.key == pygame.K_SPACE:
                             self.sian.throw(219, 364)
+                            self.holding_object = False
+
                             self.fly()
+                            
+
+            if (self.holding_object == False):
+                for i in range(10):
+                    self.sian.empty(219, 364)
+                self.empty = True
+
                             
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
@@ -310,17 +319,19 @@ class Controller:
 
             if (self.heart == 0):
                 self.state == "GAMEOVER"
-                #--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
-    def GameOver(self):
+
+    def gameOver(self):
         while (self.state == "GAMEOVER"):
-            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
 
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
-                self.state = "START"
+
+               self.state = "START"
     
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
-                self.state = "GAME"
+               self.state = "GAME"
+            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
+
 
 
 
