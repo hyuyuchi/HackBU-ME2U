@@ -361,6 +361,8 @@ class Controller:
         self.score = 0
         self.scorepic10.change(self.numbers, self.score//10)
         self.scorepic1.change(self.numbers, self.score%10)
+        self.scorepic10.final(200, 93, 40, 40)
+        self.scorepic1.final(250, 93, 40, 40)
 
     def gameOver(self):
         while self.state == "GAMEOVER":
@@ -382,14 +384,16 @@ class Controller:
             self.scoreH10.change(self.numbers, highest//10)
             self.scoreH1.change(self.numbers, highest%10)
 
-            #self.restart()
+            
             self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,) + (self.scorepic,) + (self.scoreH,))
             self.reset("assets/GameOverScreen_FullDisplay.PNG")
 
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
+                self.restart()
                 self.state = "START"
                 self.mainLoop()    
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
+                self.restart()
                 self.gameLoop()
 
 
