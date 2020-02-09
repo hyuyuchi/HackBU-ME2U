@@ -265,8 +265,12 @@ class Controller:
                    self.chia.happy(221, 365)
                    self.happyy = True
                    self.startwalk = True
+                   self.score += 1
+                   self.scorepic10.change(self.numbers, self.score//10)
+                   self.scorepic1.change(self.numbers, self.score%10)
+                   print(self.score//10, self.score%10)
 
-                elif self.gift. state == "BAD":
+                elif self.gift.state == "BAD":
                    self.chia.angry(221, 365)
                    self.angryy = True
 
@@ -275,23 +279,22 @@ class Controller:
                    self.hearts.remove(dead)
                    self.deadH.add(dead)
                    #print(len(self.hearts))
-                else:
-                   self.score += 1
-                   self.scorepic10.change(self.numbers, self.score//10)
-                   self.scorepic1.change(self.numbers, self.score%10)
-                   print(self.score//10, self.score%10)
+
+
 
                 self.gift.reset()
                 self.gameLoop()
 
             steal = pygame.sprite.collide_rect_ratio(0.5)(self.crow, self.gift)
             if steal:
-               if self.gift.state == "GOOD" and self.score > 0:
-                  self.score -= 1
-               elif self.gift.state == "BAD":
-                  self.score +=1
-               self.gift.reset()
-               self.gameLoop()
+                if  self.gift.state == "GOOD" and self.score > 0:
+                   self.score -= 1
+                elif self.gift.state == "BAD":
+                   self.score +=1
+                   self.scorepic10.change(self.numbers, self.score//10)
+                   self.scorepic1.change(self.numbers, self.score%10)
+                self.gift.reset()
+                self.gameLoop()
 
             self.crow.update()
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
@@ -364,7 +367,7 @@ class Controller:
 		
             if (self.holding_object == False):
                 self.sian.empty(219, 364)
-                
+                self.empty = True
 
             if (self.happy_timer<=30 and self.happyy == True):
                 self.happy_timer += 1
@@ -379,7 +382,7 @@ class Controller:
                     self.walktimer += 1
                 else:
                     self.chia.default(221, 365)
-                    self.empty = True
+                    
                     self.walktimer = 0
                     self.happy_timer = 0
 
