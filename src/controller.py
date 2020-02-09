@@ -198,8 +198,10 @@ class Controller:
                 self.gameLoop()
 
 
+
+
     def gameLoop(self):
-        pygame.key.set_repeat(1,10)
+        pygame.key.set_repeat(1,50)
         while True:
            #exit button
             for event in pygame.event.get():
@@ -210,47 +212,45 @@ class Controller:
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
             self.reset("assets/GameScreen.PNG")
 
-            self.crow.update()
+
        
     
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_0:
-                        self.reset("assets/GameScreen.PNG")
-                        self.theline.reset()
-                        self.linestate = "y"
+
                         self.num += 50
                         self.numx += 8
+                        self.linestate = "y"
                         print(self.num, self.numx)
                     if event.key == pygame.K_9:
-                        self.reset("assets/GameScreen.PNG")
-                        self.theline.reset()
-                        self.linestate = "y"
+
                         self.numx -= 8
                         if self.num > 0:
                             self.num -= 50
                             print(self.num, self.numx)
-
+                        self.linestate = "y"
+                    if event.type == pygame.QUIT:
+                        sys.exit()
                             
 
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
                 self.line.add((self.theline,))
                 self.line.draw(self.screen)
-                self.show.draw(self.screen)             
+                #self.show.draw(self.screen)             
                 pygame.display.flip()
-                if self.theline.rect.x >= 1670:
+                if self.theline.rect.x >= 1700:
                     self.linestate = "n"
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        sys.exit()
 
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
-            self.reset("assets/GameScreen.PNG")
+
+            self.crow.update()
+            #self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
+            #self.reset("assets/GameScreen.PNG")
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    sys.exit()
-
+                     sys.exit()
                 
 
 
