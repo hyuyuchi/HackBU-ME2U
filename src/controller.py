@@ -4,7 +4,7 @@ import random
 import time
 from src import Button
 from src import Line
-#from src import Chia
+from src import Chia
 from src import Sian
 from src import Crow
 from src import GoodObject
@@ -37,7 +37,7 @@ class Controller:
         self.ground = Button.Button(0, 793, 163, 1700, "assets/GameScreen_Ground.PNG")
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(150, 600, 10, 10, "assets/Dot.PNG")
-	#self.chia = Chia.Chia(1800, 200)
+        self.chia = Chia.Chia(1400, 435, 221, 365, "assets/Chia_Standing.PNG")
         self.sian = Sian.Sian(50, 435, 219, 364, "assets/Sian_Empty.PNG")
         self.empty = True
         self.holding_object = False
@@ -240,7 +240,10 @@ class Controller:
                       if event.key == pygame.K_SPACE:
                          self.sian.throw(219, 364)
 
+
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,))
+
+
             self.reset("assets/GameScreen.PNG")
 
     
