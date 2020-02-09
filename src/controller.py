@@ -7,7 +7,7 @@ from src import Line
 from src import Chia
 from src import Sian
 from src import Crow
-from src import GoodObject
+from src import Gift
 
 class Controller:
 
@@ -43,8 +43,7 @@ class Controller:
         self.holding_object = False
         
 
-        self.good = GoodObject.GoodObject(150, 600, 60, 60, "assets/LoveLetter.PNG")
-
+        self.gift = Gift.Gift(150, 600, 60, 60, "assets/LoveLetter.PNG")
 
 
 
@@ -240,13 +239,7 @@ class Controller:
                 self.holding_object = True
                 self.empty = False
 
-            if (self.holding_object == True):
-                for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                       if event.key == pygame.K_SPACE:
-                          self.sian.throw(219, 364)
 
-            
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.good,) + (self.chia,))
 
 
@@ -270,7 +263,10 @@ class Controller:
                             print(self.theline.rect.x, self.numx)
                     if event.key == pygame.K_1:
                         sys.exit()
-                    if event.key == pygame.K_2:
+                    if (self.holding_object == True):
+                        if event.key == pygame.K_SPACE:
+                           self.sian.throw(219, 364)
+                           
                         #self.good.update(self.num, self.numx)
                         self.fly()
                             
