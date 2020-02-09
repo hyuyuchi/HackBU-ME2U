@@ -63,7 +63,9 @@ class Controller:
         self.endPB = Button.Button(1100, 370, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
 
         self.endRB = Button.Button(1150, 500, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
-
+        self.scoreH10 = Button.Button(1270, 247, 35, 35, "assets/0.PNG")
+        self.scoreH1 = Button.Button(1305, 247, 35, 35, "assets/0.PNG")       
+        self.scoreH = pygame.sprite.Group((self.scoreH10,) + (self.scoreH1,))
 
 #-----------------------------------------------------------------------------------------------------------LOAD SPRITES
 
@@ -366,11 +368,22 @@ class Controller:
             self.scorepic10.final(1300, 147, 70, 70)
             self.scorepic1.final(1360, 147, 70, 70)
 
-
-
+            with open("src/data.json", "r") as jsonFile2:
+                data2 = json.load(jsonFile2)
+            most = int(data2["high"])
+            if self.score > most:
+                data2["high"] = self.score
+            with open("src/data.json", "w") as jsonFile3:
+                json.dump(data2, jsonFile3)
+            jsonFile3.close()
+            with open("src/data.json", "r") as jsonFile:
+                data = json.load(jsonFile)
+            highest = data["high"]
+            self.scoreH10.change(self.numbers, highest//10)
+            self.scoreH1.change(self.numbers, highest%10)
 
             #self.restart()
-            self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,) + (self.scorepic,))
+            self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,) + (self.scorepic,) + (self.scoreH,))
             self.reset("assets/GameOverScreen_FullDisplay.PNG")
 
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
