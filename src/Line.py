@@ -16,7 +16,7 @@ class Line(pygame.sprite.Sprite):
         try:
             if self.rect.x < 1700 and num >= 0:
                 self.rect.x += 30 
-                self.rect.y = (((-1/num) * (self.rect.x-numx) ** 2) - 350) * -1
+                self.rect.y = (((-1/num) * (self.rect.x-numx-250) ** 2) - 250) * -1
                 '''-1/num*(X-numx)**2 -350'''
                 '''#print(str(self.rect.x) + " , " + str(self.rect.y))'''
         except:

@@ -35,7 +35,7 @@ class Controller:
         #game screen
         self.ground = Button.Button(0, 793, 163, 1700, "assets/GameScreen_Ground.PNG")
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
-        self.theline = Line.Line(50, 600, 10, 10, "assets/Dot.PNG")
+        self.theline = Line.Line(150, 600, 10, 10, "assets/Dot.PNG")
 	#self.chia = Chia.Chia(1800, 200)
         self.sian = Sian.Sian(50, 435, 219, 364, "assets/Sian_Empty.PNG")
         self.empty = True
@@ -58,8 +58,8 @@ class Controller:
         self.state = "START"
 
         self.linestate = "n"
-        self.num = 200
-        self.numx = 500
+        self.num = 500
+        self.numx = 400
 
     def mainLoop(self):
         while self.state == "START":
@@ -235,16 +235,18 @@ class Controller:
                     if event.key == pygame.K_0:
                         self.linestate = "y"
                         self.num += 50
-                        self.numx += 8
+                        self.numx += 15
 
                         print(self.num, self.numx)
                     if event.key == pygame.K_9:
                         self.linestate = "y"
-                        self.numx -= 8
-                        if self.num > 0:
-                            self.num -= 50
-                            print(self.num, self.numx)
 
+                        if self.num > 400:
+                            self.num -= 50
+                            self.numx -= 15
+                            print(self.num, self.numx)
+                    if event.key == pygame.K_1:
+                        sys.exit()
                     if event.type == pygame.QUIT:
                         sys.exit()
                             
