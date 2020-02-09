@@ -17,10 +17,10 @@ class Sian(pygame.sprite.Sprite):
          holds = random.choice(["assets/Bouquet.PNG", "assets/Choco.PNG", "assets/GiftBoxGreen.PNG","assets/GiftBoxPink.PNG","assets/LoveLetter.PNG","assets/Ring.PNG", "assets/DeadMouse.PNG", "assets/PaperBall.PNG", "assets/Rock.PNG"])
          self.image = pygame.image.load(holds).convert_alpha()
 
-     def throw(self):
-             self.image = pygame.image.load("assets/Sian_Throw.PNG").convert_alpha()
+     def throw(self,w=1700, h=956):
+             self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Throw.PNG").convert_alpha(),(w,h))
 
 
-     def empty(self):
-         self.image = pygame.image.load("assets/Sian_Throw.PNG").convert_alpha()
+     def empty(self,w=1700, h=956):
+         self.image = pygame.transform.scale(pygame.image.load("assets/Sian_Empty.PNG").convert_alpha(),(w,h))
 

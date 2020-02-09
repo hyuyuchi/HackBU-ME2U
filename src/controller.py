@@ -36,6 +36,8 @@ class Controller:
         self.ground = Button.Button(0, 793, 163, 1700, "assets/GameScreen_Ground.PNG")
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(50, 600, 10, 10, "assets/Dot.PNG")
+	#self.chia = Chia.Chia(1800, 200)
+        self.sian = Sian.Sian(300, 300, "assets/Sian_Empty.PNG")
 
 
 
@@ -45,9 +47,7 @@ class Controller:
 
 #______________________________________________________________________________LOAD SPRITES
 
-        #self.chia = Chia.Chia(1800, 200)
-        self.sian = Sian.Sian(300, 300, "assets/Sian_Empty.PNG")
-
+        self.sian = pygame.sprite.Group()
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
@@ -205,14 +205,14 @@ class Controller:
                         sys.exit()
 
 
-               self.sian.empty
-               self.sian.hold
-                self.crow.update()
+                self.sian.empty()
+                #self.sian.hold()
+                #self.crow.update()
             
                 self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
                 self.reset("assets/GameScreen.PNG")
     
-                for event in pygame.event.get():
+                '''for event in pygame.event.get():
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_0:
                             self.reset("assets/GameScreen.PNG")
@@ -229,6 +229,8 @@ class Controller:
                             if self.num > 0:
                                 self.num -= 50
                             print(self.num, self.numx)
+                        #if event.key ==pygame.KEYSPACE:
+                            
 
                 while self.linestate == "y":
                     self.theline.update(self.num, self.numx)
@@ -240,7 +242,7 @@ class Controller:
                         self.linestate = "n"
                     for event in pygame.event.get():
                         if event.type == pygame.QUIT:
-                            sys.exit()
+                            sys.exit()'''
 
 
 
