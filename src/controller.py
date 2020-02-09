@@ -38,10 +38,11 @@ class Controller:
         self.ground = Button.Button(0, 793, 163, 1700, "assets/GameScreen_Ground.PNG")
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(150, 600, 10, 10, "assets/Dot.PNG")
-        self.chia = Chia.Chia(1400, 435, 221, 365, "assets/Chia_Standing.PNG")
+        self.chia = Chia.Chia(1400, 435, 221, 365, "assets/Chia_Standing.PNG","assets/Chia_Walking1+3.PNG", "assets/Chia_Walking2.PNG", "assets/Chia_Walking1+3.PNG", "assets/Chia_Walking4.PNG")
         self.sian = Sian.Sian(50, 435, 219, 364, "assets/Sian_Empty.PNG")
         self.empty = True
         self.holding_object = False
+        self.score = 0
      
 
         self.gift = Gift.Gift(150, 600, 60, 60, "assets/LoveLetter.PNG")
@@ -51,6 +52,14 @@ class Controller:
         #GameOver buttons
         self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
         self.endPB = Button.Button(35, 956, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
+
+        #Timers
+        self.happy_timer = 0
+        self.happyy = False
+        self.walktimer = 0
+        self.angry_timer = 0
+        self.angryy = False
+        self.startwalk = False
 
 
 #-----------------------------------------------------------------------------------------------------------LOAD SPRITES
@@ -224,8 +233,27 @@ class Controller:
 
             catch = pygame.sprite.collide_rect_ratio(0.5)(self.chia, self.gift)
             if catch:
+                if self.gift.state == "GOOD":
+                   self.score += 1
+                   self.chia.happy(221, 365)
+                   self.happyy = True
+                   self.startwalk = True
+
+                elif self.gift. state == "BAD":
+                   self.chia.angry(221, 365)
+                   self.angryy = True
+                   #self.hearts -= 1
                 self.gift.reset()
                 self.gameLoop()
+
+            steal = pygame.sprite.collide_rect_ratio(0.5)(self.crow, self.gift)
+            if steal:
+               if self.gift.state == "GOOD" and self.score > 0:
+                  self.score -= 1
+               elif self.gift.state == "BAD":
+                  self.score +=1
+               self.gift.reset()
+               self.gameLoop()
 
             self.crow.update()
             self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,))
@@ -292,12 +320,34 @@ class Controller:
 
                             self.fly()
                             
-
+		
             if (self.holding_object == False):
-                for i in range(10):
-                    self.sian.empty(219, 364)
-                self.empty = True
+                self.sian.empty(219, 364)
+                
 
+            if (self.happy_timer<=30 and self.happyy == True):
+                self.happy_timer += 1
+
+            if (self.happy_timer>=30):
+                if (self.startwalk == True):
+                    self.chia.startwalk()
+                    self.startwalk == False
+                elif self.walktimer < random.randrange(5,11):
+                    self.walk()
+                    self.chia.update()
+                    self.walktimer += 1
+                else:
+                    self.chia.default(221, 365)
+                    self.empty = True
+                    self.walktimer = 0
+                    self.happy_timer = 0
+
+            if (self.angry_timer<30 and self.angryy == True):
+                self.angry_timer += 1
+
+            else:
+                self.angry_timer = 0
+                self.chia.default(221, 365)
                             
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
