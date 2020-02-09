@@ -66,7 +66,7 @@ class Controller:
         self.line = pygame.sprite.Group()
 
 
-        self.state = "GAMEOVER"
+        self.state = "START"
 
         self.linestate = "n"
         self.num = 500
@@ -353,9 +353,9 @@ class Controller:
             self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,))
             self.reset("assets/GameOverScreen_FullDisplay.PNG")
             if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
-                #self.state = "START"
-                #self.mainLoop()
-                self.show = pygame.sprite.Group((self.endRB,) + (self.endPB,))
+                self.state = "START"
+                self.mainLoop()
+
     
             if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
                 self.gameLoop()
