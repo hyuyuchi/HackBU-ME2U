@@ -263,9 +263,10 @@ class Controller:
                    self.score += 1
                    self.chia.happy(221, 365)
                    self.happyy = True
-                   self.score += 1
+
                    self.chia.changeDirection()
                    self.chia.walkindex = 0
+
                    self.scorepic10.change(self.numbers, self.score//10)
                    self.scorepic1.change(self.numbers, self.score%10)
                    print(self.score//10, self.score%10)
@@ -297,8 +298,10 @@ class Controller:
                 self.gameLoop()
 
             self.crow.update()
-            self.chia.walk()
-            self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
+
+            if self.gift.rect.x > 205:
+                self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,) + (self.gift,) + (self.chia,) + (self.hearts,) + (self.scorepic,))
+
             self.show.draw(self.screen)
             self.reset("assets/GameScreen.PNG")
 
@@ -426,9 +429,10 @@ class Controller:
     def restart(self):
         for i in self.deadH:
             self.hearts.add(i)
-        for i in self.hearts:
-            self.hearts.remove(i)
-            self.deadH.add(i)
+        hearts = self.hearts.sprites()
+        dead = hearts[-1]
+        self.hearts.remove(dead)
+        self.deadH.add(dead)
         for i in self.deadH:
             self.hearts.add(i)
         self.score = 0

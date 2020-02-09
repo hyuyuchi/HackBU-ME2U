@@ -21,7 +21,7 @@ class Gift(pygame.sprite.Sprite):
     def update(self, num, numx):
 
         self.rect.x += 30
-        self.rect.y = (((-1/num) * (self.rect.x-numx-250) ** 2) - 250) * -1
+        self.rect.y = (((-1/num) * (self.rect.x-numx-220) ** 2) - 200) * -1
 
     def reset(self):
         self.rect.x = self.x
