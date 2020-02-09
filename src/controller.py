@@ -37,7 +37,7 @@ class Controller:
         self.crow = Crow.Crow(35, 200, 128, 163, "assets/Crow1.PNG", "assets/Crow2.PNG")
         self.theline = Line.Line(50, 600, 10, 10, "assets/Dot.PNG")
 	#self.chia = Chia.Chia(1800, 200)
-        self.sian = Sian.Sian(300, 300, "assets/Sian_Empty.PNG")
+        self.sian = Sian.Sian(20, 20, 20, 20,"assets/Sian_Empty.PNG")
 
 
 
@@ -45,9 +45,9 @@ class Controller:
 
 
 
-#______________________________________________________________________________LOAD SPRITES
+#-----------------------------------------------------------------------------------------------------------LOAD SPRITES
 
-        self.sian = pygame.sprite.Group()
+
         self.show = pygame.sprite.Group()
         self.line = pygame.sprite.Group()
 
@@ -197,6 +197,7 @@ class Controller:
             if self.state == "GAME":
                 self.gameLoop()
 
+#------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
     def gameLoop(self):
         pygame.key.set_repeat(1,10)
@@ -210,12 +211,12 @@ class Controller:
 
 
 
-                #self.sian.empty()
-                #self.sian.hold()
-                #self.crow.update()
+                self.sian.empty()
+
+                
             
 
-                self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
+                self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
                 self.reset("assets/GameScreen.PNG")
 
                 self.crow.update()
@@ -253,7 +254,7 @@ class Controller:
                         if event.type == pygame.QUIT:
                             sys.exit()
 
-                self.show = pygame.sprite.Group((self.ground,) + (self.crow,))
+                self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
                 self.reset("assets/GameScreen.PNG")
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
