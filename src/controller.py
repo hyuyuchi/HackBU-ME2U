@@ -48,7 +48,7 @@ class Controller:
 
 
         #GameOver buttons
-        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG)
+        self.endRB = Button.Button(35, 956, 104, 598, "assets/GameOverScreen_ReturnButton.PNG")
         self.endPB = Button.Button(35, 956, 109, 607, "assets/GameOverScreen_PlayAgainButton.PNG")
 
 
@@ -274,8 +274,13 @@ class Controller:
                     if (self.holding_object == True):
                         if event.key == pygame.K_SPACE:
                             self.sian.throw(219, 364)
-                           
+                            self.holding_object = False
                             self.fly()
+                            
+
+            if (self.holding_object == False):
+                self.sian.empty(219, 364)
+
                             
             while self.linestate == "y":
                 self.theline.update(self.num, self.numx)
@@ -295,19 +300,20 @@ class Controller:
                 if event.type == pygame.QUIT:
                      sys.exit()
 
-            if (heart == 0):
-              self.state == "GAMEOVER"
+            if (self.heart == 3):
+                self.state = "GAMEOVER"
+             
 #--------------------------------------------------------------------------------------------------------------------------------------------------DIVIDER
 
-    def GameOver(self):
+    def gameOver(self):
         while (self.state == "GAMEOVER"):
-            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
 
-                if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.state = "START"
+            if pygame.mouse.get_pressed()[0] and self.endRB.rect.collidepoint(pygame.mouse.get_pos()):
+               self.state = "START"
     
-                if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
-                    self.state = "GAME"
+            if pygame.mouse.get_pressed()[0] and self.endPB.rect.collidepoint(pygame.mouse.get_pos()):
+               self.state = "GAME"
+            self.reset = ("assets/GameOverScreen_FullDisplay.PNG")
 
 
 
