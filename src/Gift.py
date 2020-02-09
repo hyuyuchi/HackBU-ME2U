@@ -26,6 +26,3 @@ class Gift(pygame.sprite.Sprite):
     def object(self, image):
         self.image = pygame.transform.scale((pygame.image.load(image).convert_alpha()), (self.h,self.w))
 
-    def ready(self, x, y):
-        self.rect.x = x
-        #self.rect.y = y

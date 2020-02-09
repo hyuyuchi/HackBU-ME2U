@@ -285,10 +285,8 @@ class Controller:
 
 
 
-            #self.gift.update(self.num, self.numx)
             self.crow.update()
-            #self.show = pygame.sprite.Group((self.ground,) + (self.crow,) + (self.sian,))
-            #self.reset("assets/GameScreen.PNG")
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
