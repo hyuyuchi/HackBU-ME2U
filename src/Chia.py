@@ -33,7 +33,7 @@ class Chia(pygame.sprite.Sprite):
          self.index = 0
 
      def changeDirection(self):
-         if self.rect.x >= (1700/2)+100 and self.rect.x < 1700-100:
+         if self.rect.x >= (1700/2)+100 and self.rect.x < 1300:
             self.direction = random.choice(["right","left"])
          elif (self.rect.x < (1700/2)+100):
             self.direction = "right"
@@ -55,8 +55,7 @@ class Chia(pygame.sprite.Sprite):
              self.image = pygame.transform.scale(pygame.image.load("assets/Chia_Angry.PNG").convert_alpha(),(w,h))
 
 
-     #def startwalk (self):
-         #self.image = self.image1
+
 
      def update (self):
          if self.walkindex != -1:

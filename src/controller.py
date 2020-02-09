@@ -21,6 +21,10 @@ class Controller:
         self.screen = pygame.display.set_mode((self.width, self.height))
         self.background = pygame.Surface(self.screen.get_size()).convert()
 
+        pygame.mixer.pre_init()
+        pygame.mixer.init
+        pygame.mixer.music.load("assets/BeyondtheDream_HirokazuAkiyama.mp3")
+        pygame.mixer.music.play(-1)
 
         #start buttons
         self.startPB = Button.Button(595, 500, 123, 465, "assets/StartScreen_PlayButton.png")
@@ -160,7 +164,7 @@ class Controller:
     
                 if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "START"
-
+                    time.sleep(0.3)
                 if self.insrNB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "INSTRUCTION_2"
                     time.sleep(0.3)
@@ -177,7 +181,7 @@ class Controller:
 
                 if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "START"
-
+                    time.sleep(0.3)
                 if self.insrNB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "INSTRUCTION_3"
                     time.sleep(0.3)
@@ -200,7 +204,7 @@ class Controller:
 
                 if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "START"
-
+                    time.sleep(0.3)
                 if self.insrNB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "INSTRUCTION_4"
                     time.sleep(0.3)
@@ -221,7 +225,7 @@ class Controller:
 
                 if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "START"
-
+                    time.sleep(0.3)
                 if self.insrNB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "INSTRUCTION_5"
                     time.sleep(0.3)
@@ -242,7 +246,7 @@ class Controller:
 
                 if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "START"
-
+                    time.sleep(0.3)
                 if self.insrLeftB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
                     self.state = "INSTRUCTION_4"
                     time.sleep(0.3)
