@@ -26,7 +26,7 @@ class Controller:
         self.startPB = Button.Button(595, 500, 123, 465, "assets/StartScreen_PlayButton.png")
         self.startHB = Button.Button(595, 635, 123, 465, "assets/StartScreen_HelpButton.png")
         self.startQB = Button.Button(595, 760, 123, 465, "assets/StartScreen_QuitButton.png")
-
+        self.startCB = Button.Button(35, 40, 120, 120, "assets/StartScreen_CreditButton.PNG")
 
         #instruction buttons
         self.insrXB = Button.Button(35, 40, 120, 120, "assets/InstructionScreen_ExitButton.PNG")
@@ -124,16 +124,33 @@ class Controller:
     
                 if pygame.mouse.get_pressed()[0] and self.startHB.rect.collidepoint(pygame.mouse.get_pos()):
                     self.state = "INSTRUCTION_1"
-    
+
+                if pygame.mouse.get_pressed()[0] and self.startCB.rect.collidepoint(pygame.mouse.get_pos()):
+                    self.state = "CREDIT"
+                    time.sleep(0.3)
+
                 if pygame.mouse.get_pressed()[0] and self.startQB.rect.collidepoint(pygame.mouse.get_pos()):
                     sys.exit()
 
 
 
-                self.show = pygame.sprite.Group((self.startPB,) + (self.startHB,) + (self.startQB,))
+                self.show = pygame.sprite.Group((self.startPB,) + (self.startHB,) + (self.startQB,) + (self.startCB,))
                 self.reset("assets/StartScreen_FullDisplay.png")
 
             #===========================================================================================================================================================
+
+            while self.state == "CREDIT":
+                #exit button
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        sys.exit()
+    
+                if self.insrXB.rect.collidepoint(pygame.mouse.get_pos()) and pygame.mouse.get_pressed()[0]:
+                    self.state = "START"
+                    time.sleep(0.3)
+
+                self.show = pygame.sprite.Group((self.insrXB,))
+                self.reset("assets/MusicCreditScreen.PNG")
 
             while self.state == "INSTRUCTION_1":
                 #exit button
@@ -253,7 +270,7 @@ class Controller:
                     dead = hearts[-1]
                     self.hearts.remove(dead)
                     self.deadH.add(dead)
-                    print(len(self.hearts))
+                    #print(len(self.hearts))
                 self.gift.reset()
                 self.gameLoop()
 
@@ -269,7 +286,7 @@ class Controller:
 
                    self.scorepic10.change(self.numbers, self.score//10)
                    self.scorepic1.change(self.numbers, self.score%10)
-                   print(self.score//10, self.score%10)
+                   #print(self.score//10, self.score%10)
 
                 elif self.gift.state == "BAD":
                    self.chia.angry(221, 365)
@@ -311,10 +328,6 @@ class Controller:
         pygame.key.set_repeat(1,50)
 
         while True:
-           #exit button
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                     sys.exit()
 
 
             with open("src/data.json", "r") as jsonFile1:
@@ -347,13 +360,13 @@ class Controller:
     
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_0:
+                    if event.key == pygame.K_UP:
                         self.linestate = "y"
                         self.num += 50
                         self.numx += 15
 
                         print(self.num, self.numx)
-                    if event.key == pygame.K_9:
+                    if event.key == pygame.K_DOWN:
                         self.linestate = "y"
                         if self.num > 450:
                             self.num -= 50
@@ -365,7 +378,6 @@ class Controller:
                         if event.key == pygame.K_SPACE:
                             self.sian.throw(219, 364)
                             self.holding_object = False
-
                             self.fly()
                             
 		
